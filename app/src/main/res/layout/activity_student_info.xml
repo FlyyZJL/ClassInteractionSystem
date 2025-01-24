@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <!-- 标题 -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="个人信息"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
+
+    <!-- 用户名 -->
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="用户名: "
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 用户邮箱 -->
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="邮箱: "
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 用户类型 -->
+    <TextView
+        android:id="@+id/tvUserType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="用户类型: "
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 注册时间 -->
+    <TextView
+        android:id="@+id/tvRegisteredAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="注册时间: "
+        android:textSize="18sp"
+        android:layout_marginBottom="32dp" />
+
+    <!-- 修改密码按钮 -->
+    <Button
+        android:id="@+id/btnChangePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="修改密码"
+        android:textSize="16sp" />
+
+</LinearLayout>

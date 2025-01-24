@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!-- 标题 -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="创建课程"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
+    <!-- 课程名称输入框 -->
+    <EditText
+        android:id="@+id/etCourseName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="课程名称"
+        android:inputType="text" />
+
+    <!-- 课程描述输入框 -->
+    <EditText
+        android:id="@+id/etCourseDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="课程描述"
+        android:inputType="textMultiLine" />
+
+    <!-- 教师选择按钮 -->
+    <Button
+        android:id="@+id/btnSelectTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择教师" />
+
+    <!-- 显示当前选择的教师 -->
+    <TextView
+        android:id="@+id/tvSelectedTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="当前选择的教师: 未选择"
+        android:textColor="#555555"
+        android:paddingTop="8dp"
+        android:textSize="16sp" />
+
+    <!-- 创建课程按钮 -->
+    <Button
+        android:id="@+id/btnCreateCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="创建课程"
+        android:textColor="#ffffff"
+       />
+
+</LinearLayout>

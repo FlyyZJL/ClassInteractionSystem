@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvAdminWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="欢迎，管理员！"
+        android:textSize="24sp" />
+
+    <!-- 这里可以添加管理员特定功能按钮 -->
+    <Button
+        android:id="@+id/btnManageUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="管理用户" />
+
+    <Button
+        android:id="@+id/btnViewReports"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查看报告" />
+</LinearLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <!-- 标题 -->
+    <TextView
+        android:id="@+id/tvStudentWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="欢迎来到学生主页"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="32dp" />
+
+    <!-- 查看课程按钮 -->
+    <Button
+        android:id="@+id/btnViewCourses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查看课程"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 查看作业按钮 -->
+    <Button
+        android:id="@+id/btnViewAssignments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查看作业"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 查看个人信息按钮 -->
+    <Button
+        android:id="@+id/btnViewProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查看个人信息"
+        android:layout_marginBottom="16dp" />
+
+
+</LinearLayout>
