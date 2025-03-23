@@ -21,12 +21,33 @@ public class PendingSubmission {
     @SerializedName("hasFile")
     private boolean hasAttachment;
 
+    private int assignmentId;
+
+    private String courseName;
+
     // Getters
     public int getId() { return id; }
     public String getStudent() { return student; }
     public String getAssignmentTitle() { return assignmentTitle; }
     public long getSubmitTimestamp() { return submitTimestamp; }
     public boolean hasAttachment() { return hasAttachment; }
+
+
+    public int getAssignmentId() {
+        return assignmentId;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setAssignmentId(int assignmentId) {
+        this.assignmentId = assignmentId;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
 
     // Setters
 

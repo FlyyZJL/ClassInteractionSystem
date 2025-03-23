@@ -55,7 +55,7 @@
             android:visibility="gone"/>
     </LinearLayout>
 
-    <!-- 浮动操作按钮（可选） -->
+    <!-- 浮动操作按钮 -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_refresh"
         android:layout_width="wrap_content"
@@ -63,7 +63,32 @@
         android:layout_margin="16dp"
         android:src="@drawable/ic_refresh"
         app:backgroundTint="@color/white"
-        app:layout_anchor="@id/toolbar"
+        app:layout_anchor="@id/rv_pending_submissions"
         app:layout_anchorGravity="bottom|right|end"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_export"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_export"
+        app:backgroundTint="@color/white"
+        app:layout_anchor="@id/rv_pending_submissions"
+        app:layout_anchorGravity="bottom|right"
+        android:layout_marginBottom="90dp"
+       />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_statistics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_statistics"
+        app:backgroundTint="@color/white"
+        app:layout_anchor="@id/rv_pending_submissions"
+        app:layout_anchorGravity="bottom|right"
+        android:layout_marginBottom="160dp"
+        />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

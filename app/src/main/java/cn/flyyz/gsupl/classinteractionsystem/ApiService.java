@@ -98,6 +98,13 @@ public interface ApiService {
     @GET
     Call<ResponseBody> downloadFile(@Url String fileUrl);
 
+    // 新增统计信息接口
+    @GET("api/teacher/submission-stats")
+    Call<ApiResponse<SubmissionStats>> getSubmissionStats(
+            @Query("teacherId") int teacherId,
+            @Query("assignmentId") int assignmentId
+    );
+
     // 请求体数据类
     public class GradeRequest {
         private int teacherId;
