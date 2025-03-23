@@ -8,6 +8,9 @@ public class Course {
     private int teacherId;  // 教师ID
     private String teacherName;  // 教师名称
 
+    private String teacherEmail;  // 教师邮箱
+
+
     // 构造方法
     public Course(int courseId, String courseName, String description, int teacherId, String teacherName) {
         this.courseId = courseId;
@@ -56,6 +59,13 @@ public class Course {
 
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;
+    }
+    public String getTeacherEmail() {
+        return teacherEmail;
+    }
+
+    public void setTeacherEmail(String teacherEmail) {
+        this.teacherEmail = teacherEmail;
     }
 
     // toString 方法，方便打印

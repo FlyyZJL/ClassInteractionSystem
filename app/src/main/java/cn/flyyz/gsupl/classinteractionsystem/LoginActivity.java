@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     // 登录成功
                     try {
-                        // 解析响应数据，获取 user_type 或其他信息（具体根据后台返回内容）
+                        // 解析响应数据，获取 user_type 和 user_id
                         String responseString = response.body().string();
                         JSONObject jsonObject = new JSONObject(responseString);
                         String status = jsonObject.optString("status");
@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                             String userType = jsonObject.optString("user_type");
                             String username = user.getUsername();
                             String userid = jsonObject.optString("user_id");
-
+                            Toast.makeText(LoginActivity.this, username+",登录成功", Toast.LENGTH_SHORT).show();
                             // 保存用户数据到 SharedPreferences
                             saveUserData(username, userType, userid);
 

@@ -1,0 +1,10 @@
+<paths>
+    <files-path name="files" path="."/>
+    <external-files-path name="external_files" path="."/>
+    <external-cache-path name="cache_files" path="."/>
+    <!-- 添加外部存储根目录 -->
+    <!-- 添加下载目录 -->
+    <external-path name="downloads" path="Download" />
+    <!-- 添加应用私有目录 -->
+    <files-path name="private_files" path="." />
+</paths>

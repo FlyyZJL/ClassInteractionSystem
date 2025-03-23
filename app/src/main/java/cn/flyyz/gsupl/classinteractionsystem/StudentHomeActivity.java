@@ -28,14 +28,14 @@ public class StudentHomeActivity extends AppCompatActivity {
         // 设置按钮点击事件
         btnViewCourses.setOnClickListener(v -> {
             // 跳转到查看课程页面
-            //Intent intent = new Intent(StudentHomeActivity.this, CourseListActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(StudentHomeActivity.this, StudentCoursesActivity.class);
+            startActivity(intent);
         });
 
         btnViewAssignments.setOnClickListener(v -> {
             // 跳转到查看作业页面
-            //Intent intent = new Intent(StudentHomeActivity.this, AssignmentListActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(StudentHomeActivity.this, StudentAssignmentsActivity.class);
+            startActivity(intent);
         });
 
         btnViewProfile.setOnClickListener(v -> {

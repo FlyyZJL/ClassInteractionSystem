@@ -3,4 +3,6 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="teacher_home_title">待批改作业</string>
+    <string name="no_pending_submissions">暂无待批改作业</string>
 </resources>

@@ -28,4 +28,11 @@
         android:text="添加学生到课程"
         android:layout_marginTop="15dp"
         />
+    <Button
+        android:id="@+id/btnPublishAssignment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发布作业"
+        android:layout_marginTop="15dp"
+        />
 </LinearLayout>

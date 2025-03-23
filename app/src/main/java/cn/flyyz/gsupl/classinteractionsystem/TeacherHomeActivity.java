@@ -47,8 +47,8 @@ public class TeacherHomeActivity extends AppCompatActivity {
         // 查看作业按钮点击事件
         btnViewAssignments.setOnClickListener(v -> {
             // 跳转到作业管理页面
-//            Intent intent = new Intent(TeacherHomeActivity.this, AssignmentManagementActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(TeacherHomeActivity.this, CorrectListActivity.class);
+            startActivity(intent);
         });
         lvCourses.setOnItemClickListener((parent, view, position, id) -> {
             Course selectedCourse = (Course) parent.getItemAtPosition(position);

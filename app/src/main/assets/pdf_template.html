@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="pdfjs/web/viewer.js"></script>
+</head>
+<body>
+<div id="viewer" class="pdfViewer"></div>
+<script>
+    window.addEventListener('load', function() {
+        const fileUri = '<FILE_URI>';
+        PDFViewerApplication.initializedPromise.then(function() {
+            PDFViewerApplication.open(fileUri);
+        });
+    });
+</script>
+</body>
+</html>
