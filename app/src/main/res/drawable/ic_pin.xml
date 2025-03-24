@@ -1,0 +1,19 @@
+
+    <!-- ic_pin.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+android:width="24dp"
+android:height="24dp"
+android:viewportWidth="24"
+android:viewportHeight="24">
+
+<!-- 图钉头部（圆形） -->
+<path
+    android:fillColor="#FF000000"
+    android:pathData="M12,2c-2.76,0-5,2.24-5,5c0,5 5,11 5,11s5-6 5-11C17,4.24 14.76,2 12,2z"/>
+
+<!-- 图钉尾部（直线） -->
+<path
+    android:strokeColor="#FF000000"
+    android:strokeWidth="2"
+    android:pathData="M12,9v6"/>
+</vector>

@@ -1,5 +1,6 @@
 package cn.flyyz.gsupl.classinteractionsystem;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,12 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -26,6 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class StudentCoursesActivity extends AppCompatActivity {
+
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefresh;
     private CourseAdapter adapter;
@@ -37,26 +35,30 @@ public class StudentCoursesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student_courses);
 
         // 初始化视图
+        initViews();
+        setupRecyclerView();
+        loadCourses();
+    }
+
+    private void initViews() {
         recyclerView = findViewById(R.id.rv_courses);
         swipeRefresh = findViewById(R.id.swipe_refresh);
         sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE);
 
-        // 设置RecyclerView
+        // 下拉刷新监听
+        swipeRefresh.setOnRefreshListener(this::loadCourses);
+    }
+
+    private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CourseAdapter();
         recyclerView.setAdapter(adapter);
-
-        // 设置下拉刷新
-        swipeRefresh.setOnRefreshListener(this::loadCourses);
-
-        // 首次加载数据
-        loadCourses();
     }
 
     private void loadCourses() {
         String userId = sharedPreferences.getString("user_id", null);
         if (userId == null || userId.isEmpty()) {
-            Toast.makeText(this, "用户未登录", Toast.LENGTH_SHORT).show();
+            showError("用户未登录");
             finish();
             return;
         }
@@ -112,6 +114,22 @@ public class StudentCoursesActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
             Course course = courses.get(position);
             holder.bind(course);
+
+            // 点击事件（新增部分）
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(StudentCoursesActivity.this, CourseDetailActivity.class);
+
+                // 传递课程数据（需要Course实现Serializable）
+                intent.putExtra("courseId", course.getCourseId());
+                intent.putExtra("courseName", course.getCourseName());
+                intent.putExtra("courseDescription", course.getDescription());
+
+                // 传递用户角色（或让详情页自行读取）
+                intent.putExtra("userRole",
+                        sharedPreferences.getString("user_type", "student"));
+
+                startActivity(intent);
+            });
         }
 
         @Override
@@ -120,7 +138,7 @@ public class StudentCoursesActivity extends AppCompatActivity {
         }
     }
 
-    // ViewHolder
+    // ViewHolder保持不变
     static class CourseViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvCourseName;
         private final TextView tvTeacher;

@@ -1,6 +1,8 @@
 package cn.flyyz.gsupl.classinteractionsystem;
 
-public class Course {
+import java.io.Serializable;
+
+public class Course implements Serializable {
 
     private int courseId;  // 课程ID
     private String courseName;  // 课程名称

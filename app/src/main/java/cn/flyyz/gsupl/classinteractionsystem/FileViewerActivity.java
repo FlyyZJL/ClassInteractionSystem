@@ -16,6 +16,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -110,6 +111,7 @@ public class FileViewerActivity extends AppCompatActivity {
     private TextView textView;
     private TextView tvError;
     private Toolbar toolbar;
+    private ScrollView scrollView;
     private ProgressDialog downloadProgressDialog;
 
     @Override
@@ -127,6 +129,7 @@ public class FileViewerActivity extends AppCompatActivity {
         textView = findViewById(R.id.text_view);
         tvError = findViewById(R.id.tv_error);
         toolbar = findViewById(R.id.toolbar);
+        scrollView = findViewById(R.id.scroll);
 
         toolbar.setNavigationOnClickListener(v -> finish());
         initWebViewSettings();
@@ -147,11 +150,15 @@ public class FileViewerActivity extends AppCompatActivity {
         settings.setAllowUniversalAccessFromFileURLs(true);
         settings.setDomStorageEnabled(true);
         settings.setAllowUniversalAccessFromFileURLs(true);
+        settings.setSupportZoom(true);
+        settings.setBuiltInZoomControls(false);  // 隐藏原生缩放控件
+        settings.setDisplayZoomControls(false);  // 明确禁止显示控件
+
     }
 
     private void handleFileRequest() {
         String filePath = getIntent().getStringExtra("file_path");
-        String fileUrl = "http://192.168.1.11:9999/demo_war_exploded/submissions/" + (filePath != null ? filePath : "");
+        String fileUrl = "http://192.168.2.52:9999/demo_war_exploded/submissions/" + (filePath != null ? filePath : "");
 
         Log.d("FileViewerActivity", "File URL: " + fileUrl);
         if (fileUrl.isEmpty()) {
@@ -276,6 +283,8 @@ public class FileViewerActivity extends AppCompatActivity {
                     pdfFile);
 
             showLoadingState();
+            scrollView.setVisibility(View.GONE);
+
             webView.setVisibility(View.VISIBLE);
 
             webView.loadUrl("file:///android_asset/pdfjs/web/viewer.html?file=" + fileUri);

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 视频播放器容器 -->
+    <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+        android:id="@+id/video_player"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"/>
+
+    <!-- 内容区域 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/video_player"
+        android:fillViewport="true">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textSize="16sp"/>
+    </ScrollView>
+
+</RelativeLayout>

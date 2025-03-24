@@ -26,8 +26,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         viewBinding = true
@@ -54,4 +54,7 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("com.github.albfernandez:juniversalchardet:2.4.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation("com.shuyu:gsyVideoPlayer-java:8.1.2")
+    implementation("com.shuyu:gsyVideoPlayer-arm64:8.1.2")
+
 }

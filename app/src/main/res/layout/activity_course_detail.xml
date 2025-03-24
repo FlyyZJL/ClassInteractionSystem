@@ -35,4 +35,25 @@
         android:text="发布作业"
         android:layout_marginTop="15dp"
         />
+    <Button
+        android:id="@+id/btnDiscussion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="课程讨论区"
+        android:layout_marginTop="15dp"
+        />
+    <Button
+        android:id="@+id/btnCreateChapter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="创建章节"
+        android:layout_marginTop="15dp"
+        />
+    <Button
+        android:id="@+id/btnViewChapters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查看章节"
+        android:layout_marginTop="15dp"
+        />
 </LinearLayout>

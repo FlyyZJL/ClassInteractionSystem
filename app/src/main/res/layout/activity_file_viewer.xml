@@ -36,6 +36,7 @@
 
     <!-- 文本显示 -->
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
     </ScrollView>
 
     <!-- 加载进度 -->

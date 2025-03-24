@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.gson.*;          // 通配符导入
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -24,6 +25,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+
+import org.json.JSONException;
+
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -31,6 +37,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -55,7 +65,7 @@ public class SubmitAssignmentActivity extends AppCompatActivity {
     private int retryCount = 0;
 
     // Network
-    private WeakReference<Call<SubmissionResult>> currentCall;
+    private WeakReference<Call<JsonObject>> currentCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,14 +111,10 @@ public class SubmitAssignmentActivity extends AppCompatActivity {
     }
 
     private void loadAssignmentDetails() {
-        // 实现作业详情加载逻辑，使用sharedPreferences获取作业详情
         SharedPreferences sharedPreferences = getSharedPreferences("assignment_data", MODE_PRIVATE);
         tvAssignmentTitle.setText(sharedPreferences.getString("title", "未知作业"));
         tvDueDate.setText(sharedPreferences.getString("due_date", "未知截止日期"));
         tvCourseName.setText(sharedPreferences.getString("course_name", "未知课程"));
-
-
-
     }
 
     private String getFileName(Uri uri) {
@@ -136,13 +142,11 @@ public class SubmitAssignmentActivity extends AppCompatActivity {
     }
 
     private void validateAndSubmit() {
-        // 输入验证
         if (selectedFileUri == null && etContent.getText().toString().trim().isEmpty()) {
             showErrorDialog("内容或文件必须填写一项", false);
             return;
         }
 
-        // 文件大小检查（示例：限制50MB）
         if (selectedFileUri != null) {
             try {
                 long fileSize = getFileSize(selectedFileUri);
@@ -167,27 +171,24 @@ public class SubmitAssignmentActivity extends AppCompatActivity {
     }
 
     private void submitAssignment() {
-        // 构建请求参数
         SharedPreferences sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE);
         RequestBody studentId = createTextBody(sharedPreferences.getString("user_id", "0"));
         RequestBody assignmentIdBody = createTextBody(String.valueOf(this.assignmentId));
         RequestBody content = createTextBody(etContent.getText().toString());
         MultipartBody.Part filePart = buildFilePart();
 
-
-        // 发起请求
         ApiService api = RetrofitClient.getClient().create(ApiService.class);
-        Call<SubmissionResult> call = api.submitAssignment(studentId, assignmentIdBody, content, filePart);
+        Call<JsonObject> call = api.submitAssignment(studentId, assignmentIdBody, content, filePart);
         currentCall = new WeakReference<>(call);
 
-        call.enqueue(new Callback<SubmissionResult>() {
+        call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<SubmissionResult> call, Response<SubmissionResult> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 handleResponse(response);
             }
 
             @Override
-            public void onFailure(Call<SubmissionResult> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 if (!call.isCanceled()) {
                     handleNetworkError(t);
                 }
@@ -218,42 +219,80 @@ public class SubmitAssignmentActivity extends AppCompatActivity {
         }
     }
 
-    private void handleResponse(Response<SubmissionResult> response) {
+    private void handleResponse(Response<JsonObject> response) {
         showProgress(false);
 
-        if (response.isSuccessful() && response.body() != null) {
-            SubmissionResult result = response.body();
-            if (result.isSuccess()) {
-                handleSuccess(result);
-            } else {
-                handleBusinessError(result);
+        // 添加响应日志
+        Log.d("HTTP", "响应码: " + response.code());
+        Log.d("HTTP", "响应头: " + response.headers());
+
+        try {
+            // 处理403状态码
+            if (response.code() == HttpURLConnection.HTTP_FORBIDDEN) {
+                try {
+                    String errorBody = response.errorBody().string();
+                    Gson gson = new Gson();
+                    JsonObject errorJson = gson.fromJson(errorBody, JsonObject.class);
+                    if ("ALREADY_SUBMITTED".equals(errorJson.get("code").getAsString())) {
+                        new AlertDialog.Builder(this)
+                                .setTitle("提交失败")
+                                .setMessage("该作业已提交，不可重复提交")
+                                .setPositiveButton("确定", null)
+                                .show();
+                        return;
+                    }
+
+                    // 原有已批改处理逻辑
+                    if ("ALREADY_GRADED".equals(errorJson.get("code").getAsString())) {
+                        handleGradedResponse(errorJson);
+                        return;
+                    }
+                } catch (Exception e) {
+                    Log.e("Error", "处理错误响应失败", e);
+                }
             }
-        } else {
-            handleHttpError(response);
+
+            // 处理其他状态码
+            if (response.isSuccessful() && response.body() != null) {
+                JsonObject result = response.body();
+                Log.d("HTTP", "成功响应: " + result);
+
+                if (result.get("success").getAsBoolean()) {
+                    handleSuccess(result);
+                } else {
+                    handleBusinessError(result);
+                }
+            } else {
+                handleHttpError(response);
+            }
+        } catch (IllegalStateException | JsonSyntaxException e) {
+            Log.e("HTTP", "响应处理异常", e);
+            showErrorDialog("响应解析失败: " + e.getMessage(), false);
         }
     }
 
-    private void handleSuccess(SubmissionResult result) {
-        Toast.makeText(this, result.getMessage(), Toast.LENGTH_SHORT).show();
+    private void handleSuccess(JsonObject result) {
+        Toast.makeText(this, result.get("message").getAsString(), Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK, new Intent().putExtra("submission_time", System.currentTimeMillis()));
         supportFinishAfterTransition();
     }
 
-    private void handleBusinessError(SubmissionResult result) {
+    private void handleBusinessError(JsonObject result) {
         new AlertDialog.Builder(this)
                 .setTitle("提交失败")
-                .setMessage(result.getMessage())
+                .setMessage(result.get("message").getAsString())
                 .setPositiveButton("确定", null)
                 .show();
     }
 
-    private void handleHttpError(Response<SubmissionResult> response) {
+    private void handleHttpError(Response<JsonObject> response) {
         String errorMessage = "服务器错误：" + response.code();
         try {
             if (response.errorBody() != null) {
                 errorMessage += "\n" + response.errorBody().string();
             }
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
 
         new AlertDialog.Builder(this)
                 .setTitle("服务器错误")
@@ -281,16 +320,48 @@ public class SubmitAssignmentActivity extends AppCompatActivity {
         }
     }
 
-    private String bodyToString(final RequestBody request) {
+    private void handleGradedResponse(JsonObject response) {
+        Log.d("GradeDebug", "原始响应: " + response);
+
+        if (response == null) {
+            showErrorDialog("服务器返回空响应", false);
+            return;
+        }
+
         try {
-            final Buffer buffer = new Buffer();
-            request.writeTo(buffer);
-            return buffer.readUtf8();
-        } catch (IOException e) {
-            return "Could not read request body.";
+            if (!response.has("gradeInfo")) {
+                throw new JSONException("响应缺少gradeInfo字段");
+            }
+
+            JsonObject gradeInfo = response.getAsJsonObject("gradeInfo");
+
+            // 安全解析所有字段
+            String score = gradeInfo.has("score") ? gradeInfo.get("score").getAsString() : "未评分";
+            String feedback = gradeInfo.has("feedback") ? gradeInfo.get("feedback").getAsString() : "暂无评语";
+            String gradedBy = gradeInfo.has("gradedBy") ? gradeInfo.get("gradedBy").getAsString() : "未知批改人";
+            long gradedAt = gradeInfo.has("gradedAt") ? gradeInfo.get("gradedAt").getAsLong() : System.currentTimeMillis();
+
+            // 格式化消息
+            String message = String.format(Locale.CHINA,
+                    "分数：%s\n评语：%s\n批改人：%s\n时间：%s",
+                    score,
+                    feedback,
+                    gradedBy,
+                    new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA).format(new Date(gradedAt))
+            );
+
+            new AlertDialog.Builder(this)
+                    .setTitle("作业已批改")
+                    .setMessage(message)
+                    .setPositiveButton("确定", (d, w) -> finish())
+                    .setCancelable(false)
+                    .show();
+
+        } catch (Exception e) {
+            Log.e("GradeError", "解析失败", e);
+            showErrorDialog("数据解析错误: " + e.getMessage(), false);
         }
     }
-
 
     private void retrySubmission() {
         showProgress(true);

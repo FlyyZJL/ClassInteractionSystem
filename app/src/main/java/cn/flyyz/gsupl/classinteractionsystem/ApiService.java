@@ -1,5 +1,6 @@
 package cn.flyyz.gsupl.classinteractionsystem;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -69,13 +70,12 @@ public interface ApiService {
 
     @Multipart
     @POST("api/student/assignments/submit")
-    Call<SubmissionResult> submitAssignment(
+    Call<JsonObject> submitAssignment(
             @Part("studentId") RequestBody studentId,
             @Part("assignmentId") RequestBody assignmentId,
             @Part("content") RequestBody content,
             @Part MultipartBody.Part file
     );
-
 
     // 教师批改相关接口
     @GET("api/teacher/pending-submissions")
@@ -104,6 +104,150 @@ public interface ApiService {
             @Query("teacherId") int teacherId,
             @Query("assignmentId") int assignmentId
     );
+
+
+    // region 讨论区接口
+    @GET("api/discussions")
+    Call<JsonArray> getDiscussions(
+            @Query("course_id") int courseId,
+            @Query("user_id") int userId,
+            @Query("user_role") String userRole
+    );
+
+    @POST("api/discussions/manage")
+    Call<Void> manageDiscussion(
+            @Query("discussion_id") int discussionId,
+            @Query("user_id") int userId,
+            @Query("user_role") String userRole,
+            @Query("action") String action
+    );
+
+    @POST("api/discussions/post")
+    Call<JsonObject> createDiscussion(
+            @Body DiscussionPostRequest request
+    );
+
+
+    // 获取讨论帖详情
+    @GET("api/discussions/detail")
+    Call<JsonObject> getDiscussionDetail(
+            @Query("discussion_id") int discussionId,
+            @Query("user_id") int userId,
+            @Query("user_role") String userRole
+    );
+
+    // 获取回复列表
+    @GET("api/replies/list")
+    Call<JsonArray> getReplies(
+            @Query("discussion_id") int discussionId
+    );
+
+    // 创建新回复
+    @POST("api/replies/post")
+    Call<JsonObject> createReply(
+            @Body ReplyPostRequest request
+    );
+    // 上传视频
+    @Multipart
+    @POST("upload/video")
+    Call<JsonObject> uploadVideo(@Part MultipartBody.Part video);
+
+    @POST("chapters")
+    Call<Void> createChapter(@Body Chapter chapter);
+
+    @GET("chapters")
+    Call<List<Chapter>> getChapters(@Query("courseId") int courseId);
+
+    // 数据模型
+    class DiscussionPostRequest {
+        @SerializedName("course_id")
+        private int course_id;
+
+        @SerializedName("user_id")
+        private int user_id;
+
+        @SerializedName("user_role")
+        private String user_role;
+
+        private String title;
+        private String content;
+
+        public DiscussionPostRequest(int course_id, int user_id, String user_role, String title, String content) {
+            this.course_id = course_id;
+            this.user_id = user_id;
+            this.user_role = user_role;
+            this.title = title;
+            this.content = content;
+        }
+
+        // Getter方法...
+        public int getCourseId() {
+            return course_id;
+        }
+
+        public int getUserId() {
+            return user_id;
+        }
+
+        public String getUserRole() {
+            return user_role;
+        }
+        public String getTitle() {
+            return title;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+    }
+
+    class ReplyPostRequest {
+        @SerializedName("discussion_id")
+        private int discussionId;
+
+        @SerializedName("user_id")
+        private int userId;
+
+        @SerializedName("user_role")
+        private String userRole;
+
+        private String content;
+
+        @SerializedName("parent_reply_id")
+        private Integer parentReplyId;
+
+        // 构造函数和Getter...
+
+        public ReplyPostRequest(int discussionId, int userId, String userRole, String content, Integer parentReplyId) {
+            this.discussionId = discussionId;
+            this.userId = userId;
+            this.userRole = userRole;
+            this.content = content;
+            this.parentReplyId = parentReplyId;
+        }
+
+        public int getDiscussionId() {
+            return discussionId;
+        }
+
+        public int getUserId() {
+            return userId;
+        }
+
+        public String getUserRole() {
+            return userRole;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public Integer getParentReplyId() {
+            return parentReplyId;
+        }
+
+    }
 
     // 请求体数据类
     public class GradeRequest {

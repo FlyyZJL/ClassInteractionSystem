@@ -22,7 +22,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-        private static final String BASE_URL = "http://192.168.1.11:9999/demo_war_exploded/";
+        private static final String BASE_URL = "http://192.168.2.52:9999/demo_war_exploded/";
         private static final long CONNECT_TIMEOUT = 30; // 秒
         private static final long READ_TIMEOUT = 30;
         private static final long WRITE_TIMEOUT = 60; // 文件上传需要更长时间
