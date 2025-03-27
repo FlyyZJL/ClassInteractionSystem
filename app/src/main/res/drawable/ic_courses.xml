@@ -1,0 +1,28 @@
+<!-- ic_courses.xml 课程集合 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- 书本堆叠效果 -->
+    <group android:translateY="2">
+        <path
+            android:fillColor="#FFBDBDBD"
+            android:pathData="M5,4H19v12H5V4z M7,6h10v8H7V6z"
+            android:rotation="5"
+            android:pivotX="12"
+            android:pivotY="12"/>
+
+        <path
+            android:fillColor="#FF757575"
+            android:pathData="M5,2H19v12H5V2z M7,4h10v8H7V4z"
+            android:rotation="-3"
+            android:pivotX="12"
+            android:pivotY="12"/>
+
+        <path
+            android:fillColor="#FF000000"
+            android:pathData="M5,0H19v12H5V0z M7,2h10v8H7V2z"/>
+    </group>
+</vector>

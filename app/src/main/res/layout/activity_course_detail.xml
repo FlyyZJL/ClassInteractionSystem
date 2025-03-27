@@ -1,59 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp">
+    android:background="@color/background_color"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/tvCourseName"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="课程名称"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvCourseDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="课程描述"
-        android:layout_marginTop="8dp" />
+        <!-- 课程标题区域 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="4dp">
 
-    <Button
-        android:id="@+id/btnAddStudents"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="添加学生到课程"
-        android:layout_marginTop="15dp"
-        />
-    <Button
-        android:id="@+id/btnPublishAssignment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="发布作业"
-        android:layout_marginTop="15dp"
-        />
-    <Button
-        android:id="@+id/btnDiscussion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="课程讨论区"
-        android:layout_marginTop="15dp"
-        />
-    <Button
-        android:id="@+id/btnCreateChapter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="创建章节"
-        android:layout_marginTop="15dp"
-        />
-    <Button
-        android:id="@+id/btnViewChapters"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="查看章节"
-        android:layout_marginTop="15dp"
-        />
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:background="@drawable/header_gradient">
+
+                <TextView
+                    android:id="@+id/tvCourseName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="课程名称"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCourseDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="课程描述"
+                    android:textColor="@android:color/white"
+                    android:alpha="0.87" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- 课程操作区域 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="课程管理"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_text"
+            android:padding="16dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- 添加学生按钮 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddStudents"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:padding="16dp"
+                    android:text="添加学生到课程"
+                    android:textColor="@color/primary_text"
+                    app:icon="@drawable/ic_add_student"
+                    app:iconTint="@color/student_color" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/divider_color" />
+
+                <!-- 发布作业按钮 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPublishAssignment"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:padding="16dp"
+                    android:text="发布作业"
+                    android:textColor="@color/primary_text"
+                    app:icon="@drawable/ic_assignment"
+                    app:iconTint="@color/accent_color" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/divider_color" />
+
+                <!-- 课程讨论区按钮 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDiscussion"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:padding="16dp"
+                    android:text="课程讨论区"
+                    android:textColor="@color/primary_text"
+                    app:icon="@drawable/ic_discussion"
+                    app:iconTint="@color/discussion_color" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 章节管理区域 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="章节管理"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_text"
+            android:padding="16dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- 创建章节按钮 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCreateChapter"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:padding="16dp"
+                    android:text="创建章节"
+                    android:textColor="@color/primary_text"
+                    app:icon="@drawable/ic_create_chapter"
+                    app:iconTint="@color/chapter_color" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/divider_color" />
+
+                <!-- 查看章节按钮 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnViewChapters"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:padding="16dp"
+                    android:text="查看章节"
+                    android:textColor="@color/primary_text"
+                    app:icon="@drawable/ic_view_chapter"
+                    app:iconTint="@color/view_chapter_color" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

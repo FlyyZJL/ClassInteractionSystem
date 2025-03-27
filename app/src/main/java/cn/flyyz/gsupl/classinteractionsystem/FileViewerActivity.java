@@ -158,7 +158,7 @@ public class FileViewerActivity extends AppCompatActivity {
 
     private void handleFileRequest() {
         String filePath = getIntent().getStringExtra("file_path");
-        String fileUrl = "http://192.168.2.52:9999/demo_war_exploded/submissions/" + (filePath != null ? filePath : "");
+        String fileUrl = "http://192.168.1.11:9999/demo_war_exploded/submissions/" + (filePath != null ? filePath : "");
 
         Log.d("FileViewerActivity", "File URL: " + fileUrl);
         if (fileUrl.isEmpty()) {

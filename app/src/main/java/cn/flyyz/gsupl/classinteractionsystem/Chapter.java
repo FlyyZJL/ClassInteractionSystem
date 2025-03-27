@@ -1,6 +1,7 @@
 package cn.flyyz.gsupl.classinteractionsystem;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Chapter implements Serializable {
     private int id;
@@ -8,6 +9,8 @@ public class Chapter implements Serializable {
     private String title;
     private String content;
     private String videoUrl;
+
+    private Date createdAt;
 
     public int getId() {
         return id;
@@ -50,4 +53,16 @@ public class Chapter implements Serializable {
     }
 
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+
+    public boolean hasVideo() {
+        return videoUrl != null;
+    }
 }

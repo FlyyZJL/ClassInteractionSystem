@@ -67,6 +67,8 @@ public class TeacherCreateActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
     }
 
+
+
     private void setupButtonListeners() {
         // 视频上传按钮
         btnUpload.setOnClickListener(v -> {

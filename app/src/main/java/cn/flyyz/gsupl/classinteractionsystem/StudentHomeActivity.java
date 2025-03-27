@@ -7,11 +7,13 @@ import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.card.MaterialCardView;
+
 public class StudentHomeActivity extends AppCompatActivity {
 
-    private Button btnViewCourses;
-    private Button btnViewAssignments;
-    private Button btnViewProfile;
+    private MaterialCardView btnViewCourses;
+    private MaterialCardView btnViewAssignments;
+    private MaterialCardView btnViewProfile;
     private Button btnChangePassword;
 
     @Override

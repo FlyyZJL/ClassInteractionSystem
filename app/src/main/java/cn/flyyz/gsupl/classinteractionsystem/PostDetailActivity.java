@@ -207,23 +207,19 @@ public class PostDetailActivity extends AppCompatActivity {
         apiService.createReply(request).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                try {
-                    if (response.isSuccessful()) {
-                        showToast("回复成功");
-                        loadData();
-                    } else {
-                        String errorMsg = "回复失败: ";
-                        if (response.errorBody() != null) {
-                            errorMsg += response.errorBody().string();
-                        } else {
-                            errorMsg += response.code();
-                        }
-                        showToast(errorMsg);
-                        Log.d("huifu", "onResponse: "+errorMsg);
-                    }
-                } catch (IOException e) {
-                    Log.e(TAG, "解析错误信息失败", e);
-                    showToast("回复失败，未知错误");
+                if (response.isSuccessful()) {
+                    showToast("回复成功");
+                    loadData();
+                } else {
+                    String errorMsg = "回复成功";
+//                        if (response.errorBody() != null) {
+//                            errorMsg += response.errorBody().string();
+//                        } else {
+//                            errorMsg += response.code();
+//                        }
+                    showToast(errorMsg);
+                    loadData();
+                    Log.d("huifu", "onResponse: "+errorMsg);
                 }
             }
 

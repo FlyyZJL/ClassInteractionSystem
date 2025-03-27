@@ -5,4 +5,17 @@
     <string name="title_notifications">Notifications</string>
     <string name="teacher_home_title">待批改作业</string>
     <string name="no_pending_submissions">暂无待批改作业</string>
+    <string name="app_logo">应用图标</string>
+    <string name="login_title">欢迎登录</string>
+    <string name="username_hint">用户名</string>
+    <string name="password_hint">密码</string>
+    <string name="go_to_register">没有账号？点击注册</string>
+    <string name="user_type">用户类型</string>
+    <string name="register">立即注册</string>
+    <string name="already_have_account">已有账号？</string>
+    <string name="login">登录</string>
+    <string name="terms_policy">注册即表示您同意我们的服务条款和隐私政策</string>
+    <string name="create_account">创建新账号</string>
+    <string name="password_helper">至少6个字符，包含字母和数字</string>
+    <string name="email_hint">邮箱地址</string>
 </resources>

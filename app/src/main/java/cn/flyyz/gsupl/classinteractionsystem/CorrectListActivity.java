@@ -145,7 +145,7 @@ public class CorrectListActivity extends AppCompatActivity {
         int teacherId = Integer.parseInt(prefs.getString("user_id", "0"));
 
         // 构建导出URL
-        String url = "http://192.168.2.52:9999/demo_war_exploded/api/teacher/export-unsubmitted?"
+        String url = "http://192.168.1.11:9999/demo_war_exploded/api/teacher/export-unsubmitted?"
                 + "teacherId=" + teacherId
                 + "&assignmentId=" + assignmentId;
 

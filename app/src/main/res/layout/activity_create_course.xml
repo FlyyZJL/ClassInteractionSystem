@@ -1,60 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:background="@color/background_color"
+    android:fillViewport="true">
 
-    <!-- 标题 -->
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="创建课程"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="32dp" />
-    <!-- 课程名称输入框 -->
-    <EditText
-        android:id="@+id/etCourseName"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="课程名称"
-        android:inputType="text" />
+        android:padding="16dp">
 
-    <!-- 课程描述输入框 -->
-    <EditText
-        android:id="@+id/etCourseDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="课程描述"
-        android:inputType="textMultiLine" />
+        <!-- 页面标题卡片 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <!-- 教师选择按钮 -->
-    <Button
-        android:id="@+id/btnSelectTeacher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="选择教师" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="24dp">
 
-    <!-- 显示当前选择的教师 -->
-    <TextView
-        android:id="@+id/tvSelectedTeacher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="当前选择的教师: 未选择"
-        android:textColor="#555555"
-        android:paddingTop="8dp"
-        android:textSize="16sp" />
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_create_course"
+                    android:contentDescription="创建课程图标"
+                    app:tint="@color/primary_color" />
 
-    <!-- 创建课程按钮 -->
-    <Button
-        android:id="@+id/btnCreateCourse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="创建课程"
-        android:textColor="#ffffff"
-       />
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="创建新课程"
+                    android:textColor="@color/primary_text"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-</LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="请填写以下信息创建您的课程"
+                    android:textColor="@color/secondary_text" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 表单卡片 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@id/cardTitle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- 课程名称输入框 -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="课程名称"
+                    app:startIconDrawable="@drawable/ic_course_name"
+                    app:startIconTint="@color/primary_color"
+                    app:endIconMode="clear_text"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etCourseName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 课程描述输入框 -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="课程描述"
+                    app:startIconDrawable="@drawable/ic_description"
+                    app:startIconTint="@color/primary_color"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etCourseDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:minLines="3"
+                        android:gravity="top|start" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 教师选择区域 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="课程教师"
+                    android:textSize="16sp"
+                    android:textColor="@color/primary_text"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:cardCornerRadius="20dp"
+                        app:strokeWidth="2dp"
+                        app:strokeColor="@color/primary_color">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_teacher_avatar"
+                            android:scaleType="centerCrop"
+                            android:contentDescription="教师头像"
+                            android:padding="8dp"
+                            app:tint="@color/primary_color" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/tvSelectedTeacher"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="当前选择的教师: 未选择"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginStart="12dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSelectTeacher"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="选择"
+                        android:textColor="@color/primary_color"
+                        app:strokeColor="@color/primary_color" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 创建按钮 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCreateCourse"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:text="创建课程"
+            android:textSize="16sp"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/ic_check"
+            app:iconGravity="textStart"
+            app:layout_constraintTop_toBottomOf="@id/cardForm" />
+
+        <!-- 额外信息 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="创建后，您可以添加学生和课程内容"
+            android:textColor="@color/secondary_text"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/btnCreateCourse" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

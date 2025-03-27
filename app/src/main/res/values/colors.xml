@@ -11,7 +11,42 @@
     <color name="divider">#E0E0E0</color>
     <color name="background_grey">#F5F5F5</color>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="secondary_text">#80000000</color>
     <color name="green">#4CAF50</color>
     <color name="red">#F44336</color>
+    <color name="primary_color">#1976D2</color>
+    <color name="primary_dark">#0D47A1</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="background_color">#F5F5F5</color>
+    <color name="primary_light">#BBDEFB</color>
+    <color name="accent_color">#FF4081</color>
+    <!-- 课程颜色 -->
+    <color name="course_blue">#2196F3</color>
+    <color name="course_green">#4CAF50</color>
+    <color name="course_orange">#FF9800</color>
+    <color name="course_purple">#9C27B0</color>
+    <color name="course_red">#F44336</color>
+    <color name="course_teal">#009688</color>
+
+    <color name="divider_color">#EEEEEE</color>
+
+    <!-- 功能颜色 -->
+    <color name="student_color">#4CAF50</color>
+    <color name="chapter_color">#009688</color>
+    <color name="discussion_color">#FF9800</color>
+    <color name="view_chapter_color">#673AB7</color>
+
+    <!-- 按钮背景颜色 -->
+    <color name="course_button_bg">#4CAF50</color>
+    <color name="assignment_button_bg">#FF9800</color>
+    <color name="profile_button_bg">#9C27B0</color>
+
+    <color name="ripple_color">#80FFFFFF</color>
+
+    <!-- 密码强度颜色 -->
+    <color name="password_weak">#F44336</color>
+    <color name="password_medium">#FF9800</color>
+    <color name="password_strong">#4CAF50</color>
+    <color name="inactive_icon">#BDBDBD</color>
+
 </resources>
