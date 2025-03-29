@@ -90,7 +90,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
                     CourseAdapter adapter = new CourseAdapter(TeacherHomeActivity.this, courses);
                     lvCourses.setAdapter(adapter);
                 } else {
-                    Toast.makeText(TeacherHomeActivity.this, "获取课程失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TeacherHomeActivity.this, "当前无课程，请创建", Toast.LENGTH_SHORT).show();
                 }
             }
 
