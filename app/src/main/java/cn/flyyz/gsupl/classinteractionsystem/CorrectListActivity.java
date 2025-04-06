@@ -145,7 +145,7 @@ public class CorrectListActivity extends AppCompatActivity {
         int teacherId = Integer.parseInt(prefs.getString("user_id", "0"));
 
         // 构建导出URL
-        String url = " http://api.flyyz.cn/api/teacher/export-unsubmitted?"
+        String url = "http://api.flyyz.cn/api/teacher/export-unsubmitted?"
                 + "teacherId=" + teacherId
                 + "&assignmentId=" + assignmentId;
 

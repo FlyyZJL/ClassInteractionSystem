@@ -211,6 +211,9 @@ public interface ApiService {
     @GET("api/grades/export")
     Call<ResponseBody> exportGrades(@QueryMap Map<String, String> options);
 
+    @GET("api/course/{courseId}/statistics")
+    Call<ApiResponse<GradeStatistics>> getCourseStatistics(@Path("courseId") int courseId);
+
     // 数据模型
 
     // --------- 成绩管理数据模型 ---------

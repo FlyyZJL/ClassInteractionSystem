@@ -16,6 +16,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
     private static final String BASE_URL = "http://api.flyyz.cn/";
+
+    //private static final String BASE_URL = "http://192.168.1.11:9999/demo_war_exploded/";
     private static Retrofit retrofit = null;
     private static ApiService apiService = null;
 

@@ -1,7 +1,9 @@
 package cn.flyyz.gsupl.classinteractionsystem;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -115,7 +118,18 @@ public class GradesActivity extends AppCompatActivity implements GradeListAdapte
                 Toast.makeText(GradesActivity.this, "请先选择一个课程", Toast.LENGTH_SHORT).show();
             }
         });
+        Button btnStatistics = findViewById(R.id.btnStatistics);
+        btnStatistics.setOnClickListener(v -> {
+            Course selectedCourse = (Course) spinnerCourses.getSelectedItem();
+            if (selectedCourse != null) {
+                openStatisticsPage(selectedCourse.getCourseId());
+            } else {
+                Toast.makeText(GradesActivity.this, "请先选择课程", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+
 
     @Override
     protected void onResume() {
@@ -204,6 +218,14 @@ public class GradesActivity extends AppCompatActivity implements GradeListAdapte
                 // 不处理
             }
         });
+    }
+    /**
+     * 打开统计页面
+     */
+    private void openStatisticsPage(int courseId) {
+        Intent intent = new Intent(this, CourseStatisticsActivity.class);
+        intent.putExtra("courseId", courseId);
+        startActivity(intent);
     }
 
     // 加载课程成绩
@@ -313,45 +335,75 @@ public class GradesActivity extends AppCompatActivity implements GradeListAdapte
     }
 
     // 导出成绩
+//    private void exportGrades() {
+//        if (currentCourseId <= 0) {
+//            Toast.makeText(this, "请先选择一个课程", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        Toast.makeText(this, "开始导出成绩...", Toast.LENGTH_SHORT).show();
+//        SharedPreferences sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE);
+//        int teacherId = Integer.parseInt(sharedPreferences.getString("user_id", "-1"));
+//        Map<String, String> options = new HashMap<>();
+//        options.put("courseId", String.valueOf(currentCourseId));
+//        options.put("format", "csv");
+//        options.put("teacherId", String.valueOf(teacherId));
+//
+//
+//
+//        apiService.exportGrades(options).enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    try {
+//                        File file = saveFile(response.body(), "grades_export.csv");
+//                        Toast.makeText(GradesActivity.this, "成绩导出成功，文件保存至: " + file.getPath(), Toast.LENGTH_LONG).show();
+//                        Log.d("export", "导出文件路径: " + file.getPath());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                        Toast.makeText(GradesActivity.this, "保存文件失败", Toast.LENGTH_SHORT).show();
+//                    }
+//                } else {
+//                    Toast.makeText(GradesActivity.this, "导出失败", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+//                Log.e(TAG, "导出失败: " + t.getMessage());
+//                Toast.makeText(GradesActivity.this, "网络错误: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+
+    // 导出成绩
     private void exportGrades() {
         if (currentCourseId <= 0) {
             Toast.makeText(this, "请先选择一个课程", Toast.LENGTH_SHORT).show();
             return;
         }
-
         Toast.makeText(this, "开始导出成绩...", Toast.LENGTH_SHORT).show();
         SharedPreferences sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE);
         int teacherId = Integer.parseInt(sharedPreferences.getString("user_id", "-1"));
-        Map<String, String> options = new HashMap<>();
-        options.put("courseId", String.valueOf(currentCourseId));
-        options.put("format", "csv");
-        options.put("teacherId", String.valueOf(teacherId));
 
+        // 构建导出URL
+        String url = "http://api.flyyz.cn/api/grades/export?"
+                + "teacherId=" + teacherId
+                + "&courseId=" + currentCourseId
+                + "&format=csv";
 
+        // 使用浏览器下载
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
 
-        apiService.exportGrades(options).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    try {
-                        File file = saveFile(response.body(), "grades_export.csv");
-                        Toast.makeText(GradesActivity.this, "成绩导出成功，文件保存至: " + file.getPath(), Toast.LENGTH_LONG).show();
-                        Log.d("export", "导出文件路径: " + file.getPath());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Toast.makeText(GradesActivity.this, "保存文件失败", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(GradesActivity.this, "导出失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                Log.e(TAG, "导出失败: " + t.getMessage());
-                Toast.makeText(GradesActivity.this, "网络错误: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        // 添加异常处理
+        try {
+            startActivity(intent);
+            Toast.makeText(this, "正在使用浏览器下载成绩", Toast.LENGTH_SHORT).show();
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "未找到可以处理此链接的应用，请确保设备已安装浏览器", Toast.LENGTH_LONG).show();
+            Log.e(TAG, "浏览器启动失败: " + e.getMessage());
+        }
     }
 
     // 保存文件
