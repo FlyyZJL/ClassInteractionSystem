@@ -49,4 +49,21 @@
     <color name="password_strong">#4CAF50</color>
     <color name="inactive_icon">#BDBDBD</color>
 
+    <!-- 成绩相关颜色 -->
+    <color name="colorGradeHigh">#48BB78</color>
+    <color name="colorGradeMedium">#ECC94B</color>
+    <color name="colorGradeLow">#E53E3E</color>
+
+    <color name="colorGradeHighBg">#48BB78</color>
+    <color name="colorGradeMediumBg">#ECC94B</color>
+    <color name="colorGradeLowBg">#E53E3E</color>
+
+    <color name="colorPrimaryDark">#3182CE</color>
+    <color name="colorAccent">#48BB78</color>
+
+    <!-- 文本颜色 -->
+    <color name="colorTextPrimary">#1A202C</color>
+    <color name="colorTextSecondary">#718096</color>
+    <color name="colorDivider">#E2E8F0</color>
+
 </resources>

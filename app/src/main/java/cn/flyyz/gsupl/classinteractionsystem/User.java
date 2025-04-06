@@ -3,6 +3,10 @@ package cn.flyyz.gsupl.classinteractionsystem;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
+
+    @SerializedName("userId")
+    private int userId;
+
     @SerializedName("username")
     private String username;
 
@@ -23,6 +27,7 @@ public class User {
         this.email = email;
         this.userType = userType;
     }
+
 
     public User() {
     }
@@ -70,6 +75,14 @@ public class User {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String toString() {

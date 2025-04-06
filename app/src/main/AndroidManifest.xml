@@ -14,9 +14,9 @@
 
     <application
         android:allowBackup="true"
-        android:hardwareAccelerated="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
@@ -25,6 +25,15 @@
         android:theme="@style/Theme.ClassInteractionSystem"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".AddEditGradeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GradeDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GradesActivity"
+            android:exported="false" />
         <activity
             android:name=".StudentListActivity"
             android:exported="false" />

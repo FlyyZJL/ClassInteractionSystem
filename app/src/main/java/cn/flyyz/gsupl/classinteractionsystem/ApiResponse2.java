@@ -2,8 +2,7 @@ package cn.flyyz.gsupl.classinteractionsystem;
 
 import java.util.List;
 
-// 文件名：ApiResponse.java
-public class ApiResponse<T> {
+public class ApiResponse2<T> {
     private boolean success;
     private String message;
     private T data;

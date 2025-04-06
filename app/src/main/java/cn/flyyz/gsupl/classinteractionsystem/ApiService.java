@@ -4,6 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,11 +14,15 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
@@ -158,7 +164,149 @@ public interface ApiService {
     @GET("chapters")
     Call<List<Chapter>> getChapters(@Query("courseId") int courseId);
 
+    // --------- 成绩管理相关接口 ---------
+
+    // 获取教师课程列表
+    @GET("api/teacher/courses")
+    Call<ApiResponse<List<Course>>> getTeacherCourses(@Query("teacherId") int teacherId);
+
+    // 获取课程下的成绩列表
+    @GET("api/grades/course/{courseId}")
+    Call<ApiResponse<List<Grade>>> getCourseGrades(
+            @Path("courseId") int courseId,
+            @Query("teacherId") int teacherId
+    );
+
+    // 获取课程的学生名单
+    @GET("api/course/{courseId}/students")
+    Call<ApiResponse<List<User>>> getCourseStudents(@Path("courseId") int courseId);
+
+    // 获取单个成绩详情
+    @GET("api/grades/{gradeId}")
+    Call<ApiResponse<Grade>> getGradeDetail(
+            @Path("gradeId") int gradeId,
+            @Query("teacherId") int teacherId
+    );
+
+    // 添加成绩
+    @POST("api/grades")
+    Call<ApiResponse<Grade>> addGrade(@Body Grade grade);
+
+    // 更新成绩
+    @PUT("api/grades/{gradeId}")
+    Call<ApiResponse<Grade>> updateGrade(
+            @Path("gradeId") int gradeId,
+            @Body Grade grade
+    );
+
+    // 删除成绩
+    @DELETE("api/grades/{gradeId}")
+    Call<ApiResponse<Void>> deleteGrade(
+            @Path("gradeId") int gradeId,
+            @Query("teacherId") int teacherId
+    );
+
+    // 导出成绩
+    @Streaming
+    @GET("api/grades/export")
+    Call<ResponseBody> exportGrades(@QueryMap Map<String, String> options);
+
     // 数据模型
+
+    // --------- 成绩管理数据模型 ---------
+
+    class Grade implements Serializable {
+        private int gradeId;
+        private int courseId;
+        private int studentId;
+        private String gradeType;
+        private double score;
+        private String feedback;
+        @SerializedName("grade_date")
+        private String gradeDate;
+        private int gradedBy;
+
+        // 扩展字段
+        @SerializedName("student_name")
+        private String studentName;
+        @SerializedName("course_name")
+        private String courseName;
+        @SerializedName("graded_by_name")
+        private String gradedByName;
+
+        // 构造函数
+        public Grade() {}
+
+        public Grade(int courseId, int studentId, String gradeType, double score, String feedback, int gradedBy) {
+            this.courseId = courseId;
+            this.studentId = studentId;
+            this.gradeType = gradeType;
+            this.score = score;
+            this.feedback = feedback;
+            this.gradedBy = gradedBy;
+        }
+
+
+
+
+        // Getters 和 Setters
+        public int getGradeId() { return gradeId; }
+        public void setGradeId(int gradeId) { this.gradeId = gradeId; }
+
+        public int getCourseId() { return courseId; }
+        public void setCourseId(int courseId) { this.courseId = courseId; }
+
+        public int getStudentId() { return studentId; }
+        public void setStudentId(int studentId) { this.studentId = studentId; }
+
+        public String getGradeType() { return gradeType; }
+        public void setGradeType(String gradeType) { this.gradeType = gradeType; }
+
+        public double getScore() { return score; }
+        public void setScore(double score) { this.score = score; }
+
+        public String getFeedback() { return feedback; }
+        public void setFeedback(String feedback) { this.feedback = feedback; }
+
+        public String getGradeDate() { return gradeDate; }
+        public void setGradeDate(String gradeDate) { this.gradeDate = gradeDate; }
+
+        public int getGradedBy() { return gradedBy; }
+        public void setGradedBy(int gradedBy) { this.gradedBy = gradedBy; }
+
+        public String getStudentName() { return studentName; }
+        public void setStudentName(String studentName) { this.studentName = studentName; }
+
+        public String getCourseName() { return courseName; }
+        public void setCourseName(String courseName) { this.courseName = courseName; }
+
+        public String getGradedByName() { return gradedByName; }
+        public void setGradedByName(String gradedByName) { this.gradedByName = gradedByName; }
+
+        // 获取成绩等级
+        public String getScoreClass() {
+            if (score >= 90) return "high";
+            else if (score >= 60) return "medium";
+            else return "low";
+        }
+
+        @Override
+        public String toString() {
+            return "Grade{" +
+                    "gradeId=" + gradeId +
+                    ", courseId=" + courseId +
+                    ", studentId=" + studentId +
+                    ", gradeType='" + gradeType + '\'' +
+                    ", score=" + score +
+                    ", feedback='" + feedback + '\'' +
+                    ", gradeDate=" + gradeDate +
+                    ", gradedBy=" + gradedBy +
+                    ", studentName='" + studentName + '\'' +
+                    ", courseName='" + courseName + '\'' +
+                    ", gradedByName='" + gradedByName + '\'' +
+                    '}';
+        }
+    }
     class DiscussionPostRequest {
         @SerializedName("course_id")
         private int course_id;
@@ -297,6 +445,8 @@ public interface ApiService {
         private String message;
         private T data;
 
+        private List<T> dataList;
+
         public boolean isSuccess() {
             return isSuccess;
         }
@@ -308,5 +458,10 @@ public interface ApiService {
         public T getData() {
             return data;
         }
+
+        public void setData(T data) { this.data = data; }
+
+        public List<T> getDataList() { return dataList; }
+        public void setDataList(List<T> dataList) { this.dataList = dataList; }
     }
 }

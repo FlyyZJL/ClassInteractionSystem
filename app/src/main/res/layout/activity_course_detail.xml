@@ -122,6 +122,25 @@
                     android:textColor="@color/primary_text"
                     app:icon="@drawable/ic_discussion"
                     app:iconTint="@color/discussion_color" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/divider_color" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGrades"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:padding="16dp"
+                    android:text="成绩管理"
+                    android:textColor="@color/primary_text"
+                    app:icon="@drawable/ic_grades"
+                    app:iconTint="@color/discussion_color" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

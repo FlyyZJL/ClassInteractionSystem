@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class CourseDetailActivity extends AppCompatActivity {
 
     private TextView tvCourseName, tvCourseDescription;
-    private Button btnAddStudents,btnPublishAssignment,btnDiscussion,btnCreateChapter,btnViewChapter;
+    private Button btnAddStudents,btnPublishAssignment,btnDiscussion,btnCreateChapter,btnViewChapter,btnGrade;
     private String userRole;
     private int courseId;  // 当前课程ID
 
@@ -30,6 +30,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         btnDiscussion = findViewById(R.id.btnDiscussion);
         btnCreateChapter = findViewById(R.id.btnCreateChapter);
         btnViewChapter = findViewById(R.id.btnViewChapters);
+        btnGrade = findViewById(R.id.btnGrades);
         // 获取传递的数据
         Intent intent = getIntent();
         courseId = intent.getIntExtra("courseId", -1);
@@ -75,6 +76,12 @@ public class CourseDetailActivity extends AppCompatActivity {
             viewChapterIntent.putExtra("courseId", courseId);  // 传递课程ID
             startActivity(viewChapterIntent);
         });
+        // 跳转到成绩页面
+        btnGrade.setOnClickListener(v -> {
+            Intent gradeIntent = new Intent(CourseDetailActivity.this, GradesActivity.class);
+            gradeIntent.putExtra("courseId", courseId);  // 传递课程ID
+            startActivity(gradeIntent);
+        });
     }
     private void setupUIByRole() {
         if ("student".equals(userRole)) {
@@ -82,6 +89,7 @@ public class CourseDetailActivity extends AppCompatActivity {
             btnAddStudents.setVisibility(View.GONE);
             btnPublishAssignment.setVisibility(View.GONE);
             btnCreateChapter.setVisibility(View.GONE);
+            btnGrade.setVisibility(View.GONE);
 
             // 可选：调整讨论区按钮位置
             btnDiscussion.setLayoutParams(new LinearLayout.LayoutParams(
@@ -93,6 +101,7 @@ public class CourseDetailActivity extends AppCompatActivity {
             btnAddStudents.setVisibility(View.VISIBLE);
             btnPublishAssignment.setVisibility(View.VISIBLE);
             btnCreateChapter.setVisibility(View.VISIBLE);
+            btnGrade.setVisibility(View.VISIBLE);
         }
     }
 }
